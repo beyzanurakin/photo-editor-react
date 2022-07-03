@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Amaranth', sans-serif;
+  color: #fff;
 }
 .container {
   display: grid;
@@ -14,7 +16,7 @@
     'slider sidebar';
   height: 100vh;
   width: 100vw;
-  background-color: #82aeb1;
+  background-color: #f0ebe3;
 }
 .main-image {
   grid-area: image;
@@ -27,8 +29,7 @@
 }
 .sidebar {
   grid-area: sidebar;
-  background: #a7acd9;
-  border-left: 1px solid #000;
+  background: #e4dccf;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -37,16 +38,16 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: #fbc5c5;
+  background-color: #7d9d9c;
   padding: 1rem;
   position: relative;
 }
 .sidebar-item:hover,
 .sidebar-item:focus {
-  background-color: #fba1a1;
+  background-color: #576f72;
 }
 .sidebar-item.active {
-  background: #377d71;
+  background: #354259;
 }
 /* butonların altındaki çizgiler */
 .sidebar-item::after {
@@ -66,11 +67,38 @@
 
 .slider-container {
   grid-area: slider;
-  background: #93c6d6;
   margin-top: 2rem;
   padding: 2rem;
 }
 .slider {
   width: 100%;
   cursor: pointer;
+}
+
+.file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+.file-input {
+  margin: auto;
+}
+
+.file-input label {
+  display: block;
+  position: relative;
+  width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  background: linear-gradient(40deg, #576f72, #7d9d9c);
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease-out;
 }

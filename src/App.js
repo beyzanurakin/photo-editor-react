@@ -2,6 +2,15 @@ import SidebarItem from './components/SidebarItem'
 import Slider from './components/Slider'
 import { useState } from 'react'
 
+const fileToDataUri = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      resolve(event.target.result)
+    }
+    reader.readAsDataURL(file)
+  })
+
 const DEFAULT_OPTIONS = [
   {
     name: 'Brightness',
@@ -67,7 +76,7 @@ const DEFAULT_OPTIONS = [
   {
     name: 'Blur',
     property: 'blur',
-    value: 10,
+    value: 0,
     range: {
       min: 0,
       max: 20,
@@ -79,8 +88,22 @@ const DEFAULT_OPTIONS = [
 function App() {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
   const [options, setOptions] = useState(DEFAULT_OPTIONS)
+  const [file, setFile] = useState('')
+  const [dataUri, setDataUri] = useState('')
 
   const selectedOption = options[selectedOptionIndex]
+
+  function handleUpload(file) {
+    setFile('geldi')
+    if (!file) {
+      setDataUri('')
+      console.log('file yok')
+      return
+    }
+    fileToDataUri(file).then((dataUri) => {
+      setDataUri(dataUri)
+    })
+  }
 
   const handleSliderChange = ({ target }) => {
     setOptions((prevOptions) => {
@@ -96,13 +119,21 @@ function App() {
     const filters = options.map((option) => {
       return `${option.property}(${option.value}${option.unit})`
     })
-    return { filter: filters.join(' ') }
+    return { filter: filters.join(' '), backgroundImage: `url("${dataUri}")` }
   }
-  console.log(getImageStyle())
 
   return (
     <div className='container'>
-      <div className='main-image' style={getImageStyle()} />
+      {file && <div className='main-image' style={getImageStyle()} />}
+      <div class='file-input'>
+        <input
+          type='file'
+          id='file'
+          className='file'
+          onChange={(event) => handleUpload(event.target.files[0] || null)}
+        />
+        <label for='file'>Select file</label>
+      </div>
       <div className='sidebar'>
         {options.map((option, index) => {
           return (
